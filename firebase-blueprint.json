@@ -1,0 +1,37 @@
+{
+  "entities": {
+    "SwarmNode": {
+      "title": "SwarmNode",
+      "description": "A node in the swarm cluster",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Syncing", "Idle"] },
+        "load": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "status", "load"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "user"] }
+      },
+      "required": ["uid", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/nodes/{nodeId}": {
+      "schema": { "$ref": "#/entities/SwarmNode" },
+      "description": "Swarm nodes status"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles"
+    }
+  }
+}

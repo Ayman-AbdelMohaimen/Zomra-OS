@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-deep-black: #000000;
+  --color-crisp-white: #FFFFFF;
+  --color-power-red: #CE1126;
+  --color-eagle-gold: #C09307;
+}
+
+@layer base {
+  body {
+    @apply bg-deep-black text-crisp-white font-sans;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    @apply bg-crisp-white/5 backdrop-blur-xl border border-crisp-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)];
+  }
+  
+  .glass-panel {
+    @apply bg-gradient-to-br from-crisp-white/10 to-transparent backdrop-blur-md border border-crisp-white/10 shadow-lg;
+  }
+}

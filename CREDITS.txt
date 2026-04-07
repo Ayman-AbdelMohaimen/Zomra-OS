@@ -1,0 +1,18 @@
+ZOMRA OS - OPEN SOURCE CREDITS & ACKNOWLEDGEMENTS
+=================================================
+
+Zomra OS is built upon the shoulders of giants. We acknowledge and thank the creators and maintainers of the following open-source projects:
+
+1. React (MIT License) - Meta Platforms, Inc.
+2. Vite (MIT License) - Evan You and Vite contributors
+3. Tailwind CSS (MIT License) - Tailwind Labs
+4. Framer Motion (MIT License) - Framer B.V.
+5. Monaco Editor (MIT License) - Microsoft Corporation
+6. Lucide React (ISC License) - Lucide Contributors
+7. Firebase SDK (Apache License 2.0) - Google LLC
+8. Google GenAI SDK (Apache License 2.0) - Google LLC
+9. React Markdown (MIT License) - unified collective
+
+All proprietary logic, system architecture, configurations, and planning, including Hermes, 7orus, and PicoClaw, are the exclusive intellectual property and copyright (c) of Ayman AbdelMohaimen. Only Ayman AbdelMohaimen (or his legal heirs) has the right to grant usage licenses.
+
+Architected & Made with ❤️ by Ayman AbdelMohaimen | 100MillionDEV.com Copyright

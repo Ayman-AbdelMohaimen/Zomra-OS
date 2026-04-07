@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required) - User ID
+    //   - email: string (required) - User email
+    //   - role: string (required) - 'admin' or 'user'
+    //
+    // Collection: nodes
+    // Document ID: {nodeId}
+    // Fields:
+    //   - id: number (required) - Node ID
+    //   - status: string (required) - 'Active', 'Syncing', 'Idle'
+    //   - load: number (required) - Load percentage
+    //   - updatedAt: timestamp (optional) - Last update time
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    function isAdmin() {
+      let userDoc = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return isAuthenticated() &&
+        ((userDoc != null && userDoc.data.role == 'admin') ||
+          (request.auth.token.email == "hello.simple.ai@gmail.com" && request.auth.token.email_verified == true));
+    }
+    function hasOnlyAllowedFields(allowedFields) {
+      return request.resource.data.keys().hasOnly(allowedFields);
+    }
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // Domain Validators
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'role']) &&
+             data.uid is string && data.uid.size() > 0 && data.uid.size() < 50 &&
+             data.email is string && isValidEmail(data.email) &&
+             data.role in ['admin', 'user'];
+    }
+
+    function isValidNode(data) {
+      return hasOnlyAllowedFields(['id', 'status', 'load', 'updatedAt']) &&
+             data.id is number &&
+             data.status in ['Active', 'Syncing', 'Idle'] &&
+             data.load is number && data.load >= 0 && data.load <= 100 &&
+             (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    ((isOwner(userId) && request.resource.data.role == 'user') || isAdmin()) &&
+                    request.resource.data.uid == userId;
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    ((isOwner(userId) && request.resource.data.role == resource.data.role) || isAdmin()) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isAdmin();
+    }
+
+    match /nodes/{nodeId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin() && isValidNode(request.resource.data);
+      allow update: if isAdmin() && isValidNode(request.resource.data);
+      allow delete: if isAdmin();
+    }
+  }
+}
