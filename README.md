@@ -1,5 +1,5 @@
-<div align="center"> 𓂀
-  <img src="https://api.iconify.design/lucide:eye.svg?color=%23C09307" width="120" alt="7orus Logo" />
+<div align="center"> 
+  <img src="https://api.iconify.design/lucide:eye.svg?color=%23C09307" width="120" alt="7orus Logo" /> 𓂀
   
   # 𓂀 Zomra OS | نظام زُمرة
   
