@@ -1,7 +1,7 @@
 <div align="center"> 
   <img src="https://api.iconify.design/lucide:eye.svg?color=%23C09307" width="120" alt="7orus Logo" /> 𓂀
   
-  # 𓂀 Zomra OS | نظام زُمرة
+  # 𓂀 Zomra OS | زُمرة
   
   **The Next-Generation AI-Powered Development Environment**  
   *بيئة التطوير المستقبلية المعتمدة على الذكاء الاصطناعي وسرب الوكلاء*
